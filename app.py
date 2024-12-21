@@ -3,27 +3,18 @@ from rembg import remove
 from io import BytesIO
 from flask_cors import CORS
 
-app = Flask(__name__)  # Initialize the Flask app
-
+app = Flask(__name__)
 
 CORS(app, origins=["http://localhost:3000", "https://lostpaws.netlify.app"])
 
-
-
 @app.route('/')
 def home():
-    return "ok"
-
-# Hello Route
-@app.route('/hello', methods=['GET'])
-def hello():
-    return jsonify({'message': 'Hello, World!'})
+    return "hello"
 
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'status': 'ok'}), 200
 
-# Background Removal Route
 @app.route('/remove-bg', methods=['POST'])
 def remove_bg():
     if 'image' not in request.files:
@@ -31,12 +22,9 @@ def remove_bg():
     file = request.files['image']
     input_image = file.read()
 
-    # Remove the background
     output_image = remove(input_image)
 
-    # Return the image
     return send_file(BytesIO(output_image), mimetype='image/png', as_attachment=True, download_name='output.png')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
-
