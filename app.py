@@ -8,7 +8,6 @@ app = Flask(__name__)
 def home():
     return "ok"
 
-
 # Hello Route
 @app.route('/hello', methods=['GET'])
 def hello():
