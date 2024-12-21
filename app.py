@@ -1,8 +1,13 @@
 from flask import Flask, request, jsonify, send_file
 from rembg import remove
 from io import BytesIO
+from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__)  # Initialize the Flask app
+
+CORS(app, origins=["http://localhost:3000", "https://lostpaws.netlify.app"])
+
+
 
 @app.route('/')
 def home():
